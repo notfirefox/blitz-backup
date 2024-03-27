@@ -1,0 +1,28 @@
+import { Button, LineEdit, VerticalBox, CheckBox } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    title: "Guessing Game";
+
+    callback handle_guess_event();
+    in-out property <string> response: "Guess a number";
+    in-out property <string> guess: "";
+
+    VerticalBox {
+        label := Text {
+            text: "\{root.response}";
+        }
+
+        guess_field := LineEdit {
+            font-size: 14px;
+            text: "Enter number";
+        }
+
+        guess_button := Button {
+            text: "Guess";
+            clicked => {
+                guess = guess_field.text;
+                root.handle_guess_event();
+            }
+        }
+    }
+}
