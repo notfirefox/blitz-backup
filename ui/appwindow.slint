@@ -1,27 +1,149 @@
-import { Button, LineEdit, VerticalBox, CheckBox } from "std-widgets.slint";
+import { Button, LineEdit, VerticalBox, CheckBox, GroupBox, TabWidget, HorizontalBox, StandardTableView } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
-    title: "Guessing Game";
+    min-width: 600px;
+    min-height: 400px;
+    title: "Blitz Backup";
 
-    callback handle_guess_event();
-    in-out property <string> response: "Guess a number";
-    in-out property <string> guess: "";
+    TabWidget {
+        Tab {
+            title: "Backup";
 
-    VerticalBox {
-        label := Text {
-            text: "\{root.response}";
+            VerticalBox {
+                alignment: start;
+
+                GroupBox {
+                    title: "General";
+
+                    Button {
+                        text: "Backup";
+                    }
+                }
+            }
         }
 
-        guess_field := LineEdit {
-            font-size: 14px;
-            text: "Enter number";
+        Tab {
+            title: "Restore";
+
+            VerticalBox {
+                StandardTableView {
+                    columns: [
+                        { title: "ID" },
+                        { title: "Time" },
+                        { title: "Host" },
+                        { title: "Tags" },
+                        { title: "Paths" },
+                    ];
+                    rows: [
+                        [
+                            { text: "00000001" },
+                            { text: "24.03.2024 12:00:00" },
+                            { text: "def" },
+                            { text: "" },
+                            { text: "/home/abc" },
+                        ],
+                        [
+                            { text: "00000002" },
+                            { text: "25.03.2024 12:00:00" },
+                            { text: "def" },
+                            { text: "" },
+                            { text: "/home/abc" },
+                        ],
+                        [
+                            { text: "00000003" },
+                            { text: "26.03.2024 12:00:00" },
+                            { text: "def" },
+                            { text: "" },
+                            { text: "/home/abc" },
+                        ],
+                        [
+                            { text: "00000004" },
+                            { text: "27.03.2024 12:00:00" },
+                            { text: "def" },
+                            { text: "" },
+                            { text: "/home/abc" },
+                        ],
+                        [
+                            { text: "00000005" },
+                            { text: "28.03.2024 12:00:00" },
+                            { text: "def" },
+                            { text: "" },
+                            { text: "/home/abc" },
+                        ],
+                    ];
+                }
+
+                HorizontalBox {
+                    Button {
+                        text: "Mount";
+                    }
+
+                    Button {
+                        text: "Restore";
+                    }
+                }
+            }
         }
 
-        guess_button := Button {
-            text: "Guess";
-            clicked => {
-                guess = guess_field.text;
-                root.handle_guess_event();
+        Tab {
+            title: "Settings";
+
+            VerticalBox {
+                alignment: start;
+                padding: 5px;
+                spacing: 5px;
+
+                GroupBox {
+                    title: "General";
+
+                    GridLayout {
+                        spacing: 5px;
+
+                        Row {
+                            Text {
+                                text: "Repository: ";
+                                vertical-alignment: center;
+                            }
+
+                            LineEdit {
+                                placeholder-text: "Enter repository";
+                            }
+                        }
+
+                        Row {
+                            Text {
+                                text: "Password: ";
+                                vertical-alignment: center;
+                            }
+
+                            LineEdit {
+                                placeholder-text: "Enter password";
+                                input-type: password;
+                            }
+                        }
+                    }
+                }
+
+                GroupBox {
+                    title: "Automation";
+                    CheckBox {
+                        text: "Automatic Backups";
+                    }
+                }
+
+                HorizontalLayout {
+                    Button {
+                        text: "Defaults";
+                    }
+
+                    Rectangle {
+                        preferred-width: 100%;
+                    }
+
+                    Button {
+                        text: "Apply";
+                    }
+                }
             }
         }
     }
