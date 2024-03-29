@@ -8,7 +8,8 @@ export component AppWindow inherits Window {
     in-out property <string> backup-repository;
     in-out property <string> backup-password;
 
-    callback save_settings();
+    callback save-settings();
+    callback refresh-snapshots();
 
     TabWidget {
         Tab {
@@ -39,48 +40,18 @@ export component AppWindow inherits Window {
                         { title: "Tags" },
                         { title: "Paths" },
                     ];
-                    rows: [
-                        [
-                            { text: "00000001" },
-                            { text: "24.03.2024 12:00:00" },
-                            { text: "def" },
-                            { text: "" },
-                            { text: "/home/abc" },
-                        ],
-                        [
-                            { text: "00000002" },
-                            { text: "25.03.2024 12:00:00" },
-                            { text: "def" },
-                            { text: "" },
-                            { text: "/home/abc" },
-                        ],
-                        [
-                            { text: "00000003" },
-                            { text: "26.03.2024 12:00:00" },
-                            { text: "def" },
-                            { text: "" },
-                            { text: "/home/abc" },
-                        ],
-                        [
-                            { text: "00000004" },
-                            { text: "27.03.2024 12:00:00" },
-                            { text: "def" },
-                            { text: "" },
-                            { text: "/home/abc" },
-                        ],
-                        [
-                            { text: "00000005" },
-                            { text: "28.03.2024 12:00:00" },
-                            { text: "def" },
-                            { text: "" },
-                            { text: "/home/abc" },
-                        ],
-                    ];
                 }
 
                 HorizontalBox {
                     Button {
                         text: "Mount";
+                    }
+
+                    Button {
+                        text: "Refresh";
+                        clicked => {
+                            root.refresh-snapshots()
+                        }
                     }
 
                     Button {
