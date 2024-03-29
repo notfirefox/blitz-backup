@@ -1,4 +1,6 @@
 use directories::ProjectDirs;
+use rustic_backend::BackendOptions;
+use rustic_core::{repofile::SnapshotFile, Repository, RepositoryOptions, RusticError};
 use serde::{Deserialize, Serialize};
 use std::{
     fs::{self},
@@ -53,17 +55,35 @@ fn save_settings(settings: &Settings) -> Result<(), std::io::Error> {
     fs::write(config_file, serialized?)
 }
 
+fn get_snapshots(repo_str: &str, pwd_str: &str) -> Result<Vec<SnapshotFile>, RusticError> {
+    let repo_options = RepositoryOptions::default().password(pwd_str);
+
+    let backends = BackendOptions::default()
+        .repository(repo_str)
+        .to_backends()
+        .expect("Failed to create rustic backends");
+
+    let repo = Repository::new(&repo_options, backends)?.open()?;
+    repo.get_all_snapshots()
+}
+
 fn main() -> Result<(), slint::PlatformError> {
     let ui = AppWindow::new()?;
 
-    if let Ok(settings) = load_settings() {
-        ui.set_backup_repository(settings.repository.into());
-        ui.set_backup_password(settings.password.into());
-    }
+    let settings = load_settings().map_or_else(
+        |_| Settings {
+            repository: String::new(),
+            password: String::new(),
+        },
+        |settings| settings,
+    );
+    ui.set_backup_repository(settings.repository.clone().into());
+    ui.set_backup_password(settings.password.clone().into());
 
     ui.on_save_settings({
         let ui_handle = ui.as_weak();
         move || {
+            // TODO: Don't use unwrap
             let ui = ui_handle.unwrap();
             let settings = Settings {
                 repository: ui.get_backup_repository().to_string(),
@@ -75,6 +95,23 @@ fn main() -> Result<(), slint::PlatformError> {
                 Err(error) => {
                     println!("Error: {error}");
                 }
+            }
+        }
+    });
+
+    ui.on_refresh_snapshots({
+        move || {
+            // TODO: Show snapshots in the gui instead of the cli
+            if let Ok(snapshots) = get_snapshots(&settings.repository, &settings.password) {
+                println!("ID | Time | Host | Tags | Path");
+                for s in snapshots {
+                    println!(
+                        "{} | {} | {} | {} | {}",
+                        s.id, s.time, s.hostname, s.tags, s.paths
+                    );
+                }
+            } else {
+                println!("Failed to load snapshots from repo");
             }
         }
     });
