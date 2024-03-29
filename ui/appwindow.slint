@@ -5,6 +5,11 @@ export component AppWindow inherits Window {
     min-height: 400px;
     title: "Blitz Backup";
 
+    in-out property <string> backup-repository;
+    in-out property <string> backup-password;
+
+    callback save_settings();
+
     TabWidget {
         Tab {
             title: "Backup";
@@ -105,7 +110,8 @@ export component AppWindow inherits Window {
                                 vertical-alignment: center;
                             }
 
-                            LineEdit {
+                            repository-textfield := LineEdit {
+                                text: backup-repository;
                                 placeholder-text: "Enter repository";
                             }
                         }
@@ -116,7 +122,8 @@ export component AppWindow inherits Window {
                                 vertical-alignment: center;
                             }
 
-                            LineEdit {
+                            password-textfield := LineEdit {
+                                text: backup-password;
                                 placeholder-text: "Enter password";
                                 input-type: password;
                             }
@@ -124,24 +131,18 @@ export component AppWindow inherits Window {
                     }
                 }
 
-                GroupBox {
-                    title: "Automation";
-                    CheckBox {
-                        text: "Automatic Backups";
-                    }
-                }
-
                 HorizontalLayout {
-                    Button {
-                        text: "Defaults";
-                    }
-
                     Rectangle {
                         preferred-width: 100%;
                     }
 
                     Button {
-                        text: "Apply";
+                        text: "Save";
+                        clicked => {
+                            root.backup-repository = repository-textfield.text;
+                            root.backup-password = password-textfield.text;
+                            root.save_settings()
+                        }
                     }
                 }
             }
