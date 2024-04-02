@@ -7,29 +7,19 @@ export component AppWindow inherits Window {
 
     in-out property <string> backup-repository;
     in-out property <string> backup-password;
+    in-out property <string> backup-pathlist;
 
     callback save-settings();
     callback refresh-snapshots();
+    callback init-repository();
+    callback backup();
+    callback mount();
+    callback restore();
+    callback forget();
 
     TabWidget {
         Tab {
-            title: "Backup";
-
-            VerticalBox {
-                alignment: start;
-
-                GroupBox {
-                    title: "General";
-
-                    Button {
-                        text: "Backup";
-                    }
-                }
-            }
-        }
-
-        Tab {
-            title: "Restore";
+            title: "Snapshots";
 
             VerticalBox {
                 StandardTableView {
@@ -42,20 +32,51 @@ export component AppWindow inherits Window {
                     ];
                 }
 
-                HorizontalBox {
-                    Button {
-                        text: "Mount";
-                    }
+                GridLayout {
+                    Row {
+                        Button {
+                            text: "Init";
+                            clicked => {
+                                root.init-repository();
+                            }
+                        }
 
-                    Button {
-                        text: "Refresh";
-                        clicked => {
-                            root.refresh-snapshots()
+                        Button {
+                            text: "Backup";
+                            clicked => {
+                                root.backup();
+                            }
+                        }
+
+                        Button {
+                            text: "Refresh";
+                            clicked => {
+                                root.refresh-snapshots()
+                            }
                         }
                     }
 
-                    Button {
-                        text: "Restore";
+                    Row {
+                        Button {
+                            text: "Mount";
+                            clicked => {
+                                root.mount()
+                            }
+                        }
+
+                        Button {
+                            text: "Restore";
+                            clicked => {
+                                root.restore()
+                            }
+                        }
+
+                        Button {
+                            text: "Forget";
+                            clicked => {
+                                root.forget()
+                            }
+                        }
                     }
                 }
             }
@@ -96,7 +117,19 @@ export component AppWindow inherits Window {
                             password-textfield := LineEdit {
                                 text: backup-password;
                                 placeholder-text: "Enter password";
-                                input-type: password;
+                                // input-type: password;
+                            }
+                        }
+
+                        Row {
+                            Text {
+                                text: "Pathlist: ";
+                                vertical-alignment: center;
+                            }
+
+                            pathlist-textfield := LineEdit {
+                                text: backup-pathlist;
+                                placeholder-text: "Enter pathlist";
                             }
                         }
                     }
@@ -112,6 +145,7 @@ export component AppWindow inherits Window {
                         clicked => {
                             root.backup-repository = repository-textfield.text;
                             root.backup-password = password-textfield.text;
+                            root.backup-pathlist = pathlist-textfield.text;
                             root.save_settings()
                         }
                     }
