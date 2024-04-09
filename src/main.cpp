@@ -6,12 +6,13 @@
 #include <QUrl>
 #include <QtQml>
 
-int main(int argc, char *argv[]) {
+auto main(int argc, char *argv[]) -> int {
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("helloworld");
-    QCoreApplication::setOrganizationName(QStringLiteral("KDE"));
-    QCoreApplication::setOrganizationDomain(QStringLiteral("kde.org"));
-    QCoreApplication::setApplicationName(QStringLiteral("Hello World"));
+    QCoreApplication::setOrganizationName(QStringLiteral("notfirefox"));
+    QCoreApplication::setOrganizationDomain(
+        QStringLiteral("github.com/notfirefox"));
+    QCoreApplication::setApplicationName(QStringLiteral("Blitz Backup"));
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
@@ -19,6 +20,7 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
+    // NOLINTNEXTLINE
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
