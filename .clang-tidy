@@ -7,12 +7,13 @@ Checks: "*,
         -google-*,
         -llvm*,
         -zircon-*,
+        -cppcoreguidelines-owning-memory,
+        -cppcoreguidelines-non-private-member-variables-in-classes,
+        -misc-non-private-member-variables-in-classes,
         -readability-avoid-const-params-in-decls,
         -readability-convert-member-functions-to-static,
         -readability-identifier-length,
         -readability-static-accessed-through-instance,
-        -cppcoreguidelines-non-private-member-variables-in-classes,
-        -misc-non-private-member-variables-in-classes,
 "
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
