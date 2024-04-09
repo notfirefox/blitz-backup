@@ -1,0 +1,19 @@
+---
+Checks: "*,
+        -abseil-*,
+        -altera-*,
+        -android-*,
+        -fuchsia-*,
+        -google-*,
+        -llvm*,
+        -zircon-*,
+        -readability-avoid-const-params-in-decls,
+        -readability-convert-member-functions-to-static,
+        -readability-identifier-length,
+        -readability-static-accessed-through-instance,
+        -cppcoreguidelines-non-private-member-variables-in-classes,
+        -misc-non-private-member-variables-in-classes,
+"
+WarningsAsErrors: ''
+HeaderFilterRegex: ''
+FormatStyle:     none

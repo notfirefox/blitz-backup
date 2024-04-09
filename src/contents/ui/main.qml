@@ -1,26 +1,91 @@
-// Includes relevant modules used by the QML
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.20 as Kirigami
 
-// Provides basic features needed for all kirigami applications
 Kirigami.ApplicationWindow {
-    // Unique identifier to reference this object
     id: root
 
-    // Window title
-    // i18nc() makes a string translatable
-    // and provides additional context for the translators
-    title: i18nc("@title:window", "Hello World")
+    title: i18nc("@title:window", "Blitz Backup")
 
-    // Set the first page that will be loaded when the app opens
-    // This can also be set to an id of a Kirigami.Page
-    pageStack.initialPage: Kirigami.Page {
-        Controls.Label {
-            // Center label horizontally and vertically within parent object
-            anchors.centerIn: parent
-            text: i18n("Hello World!")
+    globalDrawer: Kirigami.GlobalDrawer {
+        isMenu: true
+        actions: [
+            Kirigami.Action {
+                text: i18n("Quit")
+                icon.name: "gtk-quit"
+                shortcut: StandardKey.Quit
+                onTriggered: Qt.quit()
+            }
+        ]
+    }
+
+    ListModel {
+        id: snapshotModel
+        ListElement {
+            snapshotId: "85da9c7f"
+            snapshotTime: "2024-04-09 10:17:16"
+            snapshotHost: "desktop"
+            snapshotPaths: "/home/notfirefox"
+            snapshotTags: "some tags"
+        }
+        ListElement {
+            snapshotId: "e08ebe6e"
+            snapshotTime: "2024-04-08 11:35:45"
+            snapshotHost: "laptop"
+            snapshotPaths: "/home/notfirefox"
+            snapshotTags: "some tags"
+        }
+        ListElement {
+            snapshotId: "a83f76be"
+            snapshotTime: "2024-04-08 10:23:08"
+            snapshotHost: "desktop"
+            snapshotPaths: "/home/notfirefox"
+            snapshotTags: "some tags"
+        }
+        ListElement {
+            snapshotId: "8632cc8e"
+            snapshotTime: "2024-04-07 13:04:26"
+            snapshotHost: "desktop"
+            snapshotPaths: "/home/notfirefox"
+            snapshotTags: "some tags"
+        }
+        ListElement {
+            snapshotId: "9f9ad7d9"
+            snapshotTime: "2024-04-06 10:47:54"
+            snapshotHost: "desktop"
+            snapshotPaths: "/home/notfirefox"
+            snapshotTags: "some tags"
+        }
+    }
+
+    pageStack.initialPage: Kirigami.ScrollablePage {
+        title: i18nc("@title", "Snapshots")
+
+        // Kirigami.Action encapsulates a UI action. Inherits from Controls.Action
+        actions {
+            main: Kirigami.Action {
+                id: addAction
+                // Name of icon associated with the action
+                icon.name: "list-add"
+                // Action text, i18n function returns translated string
+                text: i18nc("@action:button", "Backup")
+                // TODO: onTriggered
+            }
+            contextualActions: [
+                Kirigami.Action {
+                    icon.name: "view-refresh"
+                    text: i18nc("@action:button", "Refresh")
+                    // TODO: onTriggered
+                }
+            ]
+        }
+
+        Kirigami.CardsListView {
+            id: layout
+            model: snapshotModel
+            delegate: SnapshotDelegate {
+            }
         }
     }
 }

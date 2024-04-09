@@ -1,10 +1,12 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
 project(blitz-backup)
-
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(ECM REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set (CMAKE_CXX_STANDARD 23)
+set (CXX_STANDARD_REQUIRED ON)
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
