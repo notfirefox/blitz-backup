@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Layouts 1.15
 import org.kde.kirigami 2.20 as Kirigami
+import io.github.notfirefox 1.0
 
 Kirigami.ApplicationWindow {
     id: root
@@ -70,13 +71,13 @@ Kirigami.ApplicationWindow {
                 icon.name: "list-add"
                 // Action text, i18n function returns translated string
                 text: i18nc("@action:button", "Backup")
-                // TODO: onTriggered
+                onTriggered: Backend.backup()
             }
             contextualActions: [
                 Kirigami.Action {
                     icon.name: "view-refresh"
                     text: i18nc("@action:button", "Refresh")
-                    // TODO: onTriggered
+                    onTriggered: Backend.refresh()
                 }
             ]
         }

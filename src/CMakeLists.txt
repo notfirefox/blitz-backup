@@ -2,6 +2,8 @@ add_executable(blitz-backup)
 
 target_sources(blitz-backup PRIVATE
     main.cpp
+    backend.cpp
+    restic.cpp
     resources.qrc
 )
 

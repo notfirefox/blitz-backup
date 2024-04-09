@@ -1,3 +1,5 @@
+#include "backend.h"
+
 #include <KLocalizedContext>
 #include <KLocalizedString>
 #include <QApplication>
@@ -5,13 +7,14 @@
 #include <QQuickStyle>
 #include <QUrl>
 #include <QtQml>
+#include <qqml.h>
 
 auto main(int argc, char *argv[]) -> int {
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("helloworld");
     QCoreApplication::setOrganizationName(QStringLiteral("notfirefox"));
     QCoreApplication::setOrganizationDomain(
-        QStringLiteral("github.com/notfirefox"));
+        QStringLiteral("notfirefox.github.io"));
     QCoreApplication::setApplicationName(QStringLiteral("Blitz Backup"));
 
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
@@ -20,7 +23,10 @@ auto main(int argc, char *argv[]) -> int {
 
     QQmlApplicationEngine engine;
 
-    // NOLINTNEXTLINE
+    Backend backend;
+    qmlRegisterSingletonInstance<Backend>("io.github.notfirefox", 1, 0,
+                                          "Backend", &backend);
+
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
