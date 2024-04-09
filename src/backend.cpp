@@ -11,7 +11,7 @@ Q_INVOKABLE void Backend::backup() { std::cout << "Backup" << std::endl; }
 Q_INVOKABLE void Backend::refresh() {
     std::cout << "Refresh" << std::endl;
 
-    auto *process = new QProcess(this->parent());
+    auto *process = new QProcess(this);
     process->start("restic snapshots");
     QObject::connect(process, &QProcess::readyReadStandardOutput, this,
                      &Backend::readyRefresh);
