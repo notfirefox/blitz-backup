@@ -9,7 +9,7 @@
 #include <QtQml>
 #include <qqml.h>
 
-auto main(int argc, char *argv[]) -> int {
+int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("helloworld");
     QCoreApplication::setOrganizationName(QStringLiteral("notfirefox"));
