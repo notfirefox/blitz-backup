@@ -22,7 +22,7 @@ find_package(Qt${QT_MAJOR_VERSION} REQUIRED NO_MODULE COMPONENTS
 )
 
 find_package(KF${QT_MAJOR_VERSION} REQUIRED COMPONENTS
-    Kirigami2
+    Kirigami
     I18n
     CoreAddons
 )
