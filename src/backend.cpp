@@ -12,7 +12,7 @@ Q_INVOKABLE void Backend::refresh() {
     std::cout << "Refresh" << std::endl;
 
     auto *process = new QProcess(this);
-    process->start("restic snapshots");
+    process->startCommand("restic snapshots");
     QObject::connect(process, &QProcess::readyReadStandardOutput, this,
                      &Backend::readyRefresh);
 }

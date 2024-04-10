@@ -77,23 +77,20 @@ Kirigami.ApplicationWindow {
         title: i18nc("@title", "Snapshots")
 
         // Kirigami.Action encapsulates a UI action. Inherits from Controls.Action
-        actions {
-            main: Kirigami.Action {
+        actions: [
+            Kirigami.Action {
                 id: addAction
-                // Name of icon associated with the action
                 icon.name: "list-add"
-                // Action text, i18n function returns translated string
                 text: i18nc("@action:button", "Backup")
                 onTriggered: Backend.backup()
+            },
+            Kirigami.Action {
+                id: refreshAction
+                icon.name: "view-refresh"
+                text: i18nc("@action:button", "Refresh")
+                onTriggered: Backend.refresh()
             }
-            contextualActions: [
-                Kirigami.Action {
-                    icon.name: "view-refresh"
-                    text: i18nc("@action:button", "Refresh")
-                    onTriggered: Backend.refresh()
-                }
-            ]
-        }
+        ]
 
         Kirigami.CardsListView {
             id: layout
