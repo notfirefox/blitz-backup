@@ -1,5 +1,6 @@
 #include "backend.h"
 
+#include <KAboutData>
 #include <KLocalizedContext>
 #include <KLocalizedString>
 #include <QApplication>
@@ -7,11 +8,14 @@
 #include <QQuickStyle>
 #include <QUrl>
 #include <QtQml>
+#include <qjsengine.h>
+#include <qjsvalue.h>
 #include <qqml.h>
+#include <qqmlengine.h>
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    KLocalizedString::setApplicationDomain("helloworld");
+    KLocalizedString::setApplicationDomain("blitz-backup");
     QCoreApplication::setOrganizationName(QStringLiteral("notfirefox"));
     QCoreApplication::setOrganizationDomain(
         QStringLiteral("notfirefox.github.io"));
@@ -21,12 +25,25 @@ int main(int argc, char *argv[]) {
         QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
     }
 
-    QQmlApplicationEngine engine;
+    KAboutData aboutData(QStringLiteral("blitz-backup"),
+                         i18nc("@title", "Blitz Backup"), QStringLiteral("1.0"),
+                         i18n("Fast & Secure Backups"), KAboutLicense::GPL_V3,
+                         i18n("(c) 2024 notfirefox"));
+    aboutData.setOrganizationDomain("io.github.notfirefox");
+    aboutData.setDesktopFileName("io.github.notfirefox.blitz-backup");
+
+    KAboutData::setApplicationData(aboutData);
+    qmlRegisterSingletonType("io.github.notfirefox", 1, 0, "About",
+                             [](QQmlEngine *engine, QJSEngine *) -> QJSValue {
+                                 return engine->toScriptValue(
+                                     KAboutData::applicationData());
+                             });
 
     Backend backend;
     qmlRegisterSingletonInstance<Backend>("io.github.notfirefox", 1, 0,
                                           "Backend", &backend);
 
+    QQmlApplicationEngine engine;
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
