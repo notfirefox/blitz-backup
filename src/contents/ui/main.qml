@@ -17,8 +17,21 @@ Kirigami.ApplicationWindow {
                 icon.name: "gtk-quit"
                 shortcut: StandardKey.Quit
                 onTriggered: Qt.quit()
+            },
+            Kirigami.Action {
+                text: i18n("About")
+                icon.name: "help-about"
+                onTriggered: pageStack.layers.push(aboutPage)
             }
         ]
+    }
+
+    Component {
+        id: aboutPage
+
+        Kirigami.AboutPage {
+            aboutData: About
+        }
     }
 
     ListModel {
