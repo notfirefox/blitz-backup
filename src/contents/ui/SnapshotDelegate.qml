@@ -24,13 +24,13 @@ Kirigami.AbstractCard {
                 RowLayout {
                     Layout.fillWidth: true
                     Kirigami.Heading {
-                        text: Qt.formatDateTime(snapshotTime, "dd.MM.yyyy – HH:mm:ss")
+                        text: Qt.formatDateTime(model.time, "dd.MM.yyyy – HH:mm:ss")
                         level: 1
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignLeft
                     }
                     Controls.Label {
-                        text: snapshotId
+                        text: model.shortId
                         Layout.alignment: Qt.AlignRight
                     }
                 }
@@ -38,24 +38,24 @@ Kirigami.AbstractCard {
                     Layout.fillWidth: true
                 }
                 Controls.Label {
-                    text: "Host: " + snapshotHost
+                    text: "Host: " + model.hostname
                 }
                 Controls.Label {
-                    text: "Paths: " + snapshotPaths
+                    text: "Paths: " + model.paths
                 }
                 Controls.Label {
-                    text: "Tags: " + snapshotTags
+                    text: "Tags: " + model.tags
                 }
                 RowLayout {
                     Layout.alignment: Qt.AlignRight
 
                     Controls.Button {
                         text: i18n("Mount")
-                        onClicked: Backend.mount(snapshotId)
+                        onClicked: Backend.mount(model.shortId)
                     }
                     Controls.Button {
                         text: i18n("Restore")
-                        onClicked: Backend.restore(snapshotId)
+                        onClicked: Backend.restore(model.shortId)
                     }
                 }
             }

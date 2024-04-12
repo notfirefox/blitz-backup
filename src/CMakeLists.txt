@@ -3,8 +3,9 @@ add_executable(blitz-backup)
 target_sources(blitz-backup PRIVATE
     main.cpp
     backend.cpp
-    restic.cpp
     resources.qrc
+    snapshot.cpp
+    snapshotmodel.cpp
 )
 
 target_link_libraries(blitz-backup

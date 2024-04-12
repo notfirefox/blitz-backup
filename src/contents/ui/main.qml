@@ -34,47 +34,12 @@ Kirigami.ApplicationWindow {
         }
     }
 
-    ListModel {
+    SnapshotModel {
         id: snapshotModel
-        ListElement {
-            snapshotId: "85da9c7f"
-            snapshotTime: "2024-04-09 10:17:16"
-            snapshotHost: "desktop"
-            snapshotPaths: "/home/notfirefox"
-            snapshotTags: "some tags"
-        }
-        ListElement {
-            snapshotId: "e08ebe6e"
-            snapshotTime: "2024-04-08 11:35:45"
-            snapshotHost: "laptop"
-            snapshotPaths: "/home/notfirefox"
-            snapshotTags: "some tags"
-        }
-        ListElement {
-            snapshotId: "a83f76be"
-            snapshotTime: "2024-04-08 10:23:08"
-            snapshotHost: "desktop"
-            snapshotPaths: "/home/notfirefox"
-            snapshotTags: "some tags"
-        }
-        ListElement {
-            snapshotId: "8632cc8e"
-            snapshotTime: "2024-04-07 13:04:26"
-            snapshotHost: "desktop"
-            snapshotPaths: "/home/notfirefox"
-            snapshotTags: "some tags"
-        }
-        ListElement {
-            snapshotId: "9f9ad7d9"
-            snapshotTime: "2024-04-06 10:47:54"
-            snapshotHost: "desktop"
-            snapshotPaths: "/home/notfirefox"
-            snapshotTags: "some tags"
-        }
     }
 
     pageStack.initialPage: Kirigami.ScrollablePage {
-        title: i18nc("@title", "Snapshots")
+        title: i18nc("@title", "Entries")
 
         // Kirigami.Action encapsulates a UI action. Inherits from Controls.Action
         actions: [
@@ -97,6 +62,10 @@ Kirigami.ApplicationWindow {
             model: snapshotModel
             delegate: SnapshotDelegate {
             }
+        }
+
+        Component.onCompleted: {
+            Backend.snapshotModelUpdated.connect(snapshotModel.updateSnapshotModel);
         }
     }
 }
