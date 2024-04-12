@@ -1,15 +1,15 @@
 #pragma once
 
-#include "restic.h"
-
+#include "snapshot.h"
 #include <QObject>
 #include <qobjectdefs.h>
+#include <qprocess.h>
 
 class Backend : public QObject {
     Q_OBJECT
 
   private:
-    Restic *restic;
+    QProcess *process;
 
   public:
     explicit Backend(QObject *parent = nullptr);
@@ -18,5 +18,9 @@ class Backend : public QObject {
     Q_INVOKABLE void mount(const QString &);
     Q_INVOKABLE void restore(const QString &);
 
-    // void readyRefresh();
+    // restic process finished
+    void handleResticOutput(int, QProcess::ExitStatus);
+
+  signals:
+    void snapshotModelUpdated(QList<Snapshot> snapshots);
 };

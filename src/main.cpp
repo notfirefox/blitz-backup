@@ -1,4 +1,5 @@
 #include "backend.h"
+#include "snapshotmodel.h"
 
 #include <KAboutData>
 #include <KLocalizedContext>
@@ -10,10 +11,15 @@
 #include <QtQml>
 #include <qjsengine.h>
 #include <qjsvalue.h>
+#include <qlogging.h>
 #include <qqml.h>
 #include <qqmlengine.h>
 
 int main(int argc, char *argv[]) {
+    // Enable debug logging
+    QLoggingCategory::defaultCategory()->setEnabled(QtMsgType::QtDebugMsg,
+                                                    true);
+
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("blitz-backup");
     QCoreApplication::setOrganizationName(QStringLiteral("notfirefox"));
@@ -42,6 +48,9 @@ int main(int argc, char *argv[]) {
     Backend backend;
     qmlRegisterSingletonInstance<Backend>("io.github.notfirefox", 1, 0,
                                           "Backend", &backend);
+
+    qmlRegisterType<SnapshotModel>("io.github.notfirefox", 1, 0,
+                                   "SnapshotModel");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
