@@ -1,4 +1,5 @@
 #include "backend.h"
+#include "config.h"
 #include "snapshotmodel.h"
 
 #include <KAboutData>
@@ -44,6 +45,10 @@ int main(int argc, char *argv[]) {
                                  return engine->toScriptValue(
                                      KAboutData::applicationData());
                              });
+
+    auto *config = Config::self();
+    qmlRegisterSingletonInstance("io.github.notfirefox", 1, 0, "Config",
+                                 config);
 
     Backend backend;
     qmlRegisterSingletonInstance<Backend>("io.github.notfirefox", 1, 0,

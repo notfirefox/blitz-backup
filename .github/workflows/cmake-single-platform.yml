@@ -25,7 +25,7 @@ jobs:
       shell: bash
       run: |
         sudo dnf -y groupinstall "Development Tools" "Development Libraries"
-        sudo dnf -y install cmake extra-cmake-modules qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtquickcontrols2-devel kf6-kirigami2-devel kf6-ki18n-devel kf6-kcoreaddons-devel qqc2-desktop-style
+        sudo dnf -y install cmake extra-cmake-modules qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtquickcontrols2-devel kf6-kirigami2-devel kf6-kconfig-devel kf6-ki18n-devel kf6-kcoreaddons-devel qqc2-desktop-style
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.

@@ -19,11 +19,51 @@ Kirigami.ApplicationWindow {
                 onTriggered: Qt.quit()
             },
             Kirigami.Action {
+                text: i18n("Settings")
+                icon.name: "settings-configure"
+                shortcut: StandardKey.Preferences
+                onTriggered: pageStack.layers.push(settingsPage)
+            },
+            Kirigami.Action {
                 text: i18n("About")
                 icon.name: "help-about"
                 onTriggered: pageStack.layers.push(aboutPage)
             }
         ]
+    }
+
+    Component {
+        id: settingsPage
+
+        Kirigami.Page {
+            Kirigami.FormLayout {
+                anchors.fill: parent
+                Item {
+                    Kirigami.FormData.isSection: true
+                    Kirigami.FormData.label: "General"
+                }
+
+                Controls.TextField {
+                    Kirigami.FormData.label: "Repository"
+                    text: Config.repository
+                    onTextChanged: {
+                        Config.repository = text;
+                    }
+                }
+                Controls.TextField {
+                    Kirigami.FormData.label: "password"
+                    text: Config.password
+                    onTextChanged: {
+                        Config.password = text;
+                    }
+                }
+                Controls.Button {
+                    id: applyButton
+                    text: i18n("Apply")
+                    onClicked: Config.save()
+                }
+            }
+        }
     }
 
     Component {

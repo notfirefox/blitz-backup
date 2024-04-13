@@ -25,6 +25,7 @@ find_package(KF${QT_MAJOR_VERSION} REQUIRED COMPONENTS
     Kirigami
     I18n
     CoreAddons
+    Config
 )
 
 add_subdirectory(src)
