@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
 
     qmlRegisterType<SnapshotModel>("io.github.notfirefox", 1, 0,
                                    "SnapshotModel");
+    backend.refresh();
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
