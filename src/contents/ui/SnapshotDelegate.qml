@@ -20,35 +20,24 @@ Kirigami.AbstractCard {
             columnSpacing: Kirigami.Units.largeSpacing
             columns: root.wideScreen ? 4 : 2
 
-            ColumnLayout {
-                RowLayout {
-                    Layout.fillWidth: true
+            GridLayout {
+                Kirigami.Icon {
+                    source: "application-x-compress"
+                }
+                ColumnLayout {
                     Kirigami.Heading {
-                        text: Qt.formatDateTime(model.time, "dd.MM.yyyy – HH:mm:ss")
+                        text: Qt.formatDateTime(model.time, "dd.MM.yyyy – HH:mm")
                         level: 1
-                        Layout.fillWidth: true
-                        Layout.alignment: Qt.AlignLeft
                     }
                     Controls.Label {
-                        text: model.shortId
-                        Layout.alignment: Qt.AlignRight
+                        text: model.hostname
                     }
-                }
-                Kirigami.Separator {
-                    Layout.fillWidth: true
-                }
-                Controls.Label {
-                    text: "Host: " + model.hostname
-                }
-                Controls.Label {
-                    text: "Paths: " + model.paths
-                }
-                Controls.Label {
-                    text: "Tags: " + model.tags
                 }
                 RowLayout {
                     Layout.alignment: Qt.AlignRight
-
+                    Rectangle {
+                        Layout.fillWidth: true
+                    }
                     Controls.Button {
                         text: i18n("Mount")
                         onClicked: Backend.mount(model.shortId)
