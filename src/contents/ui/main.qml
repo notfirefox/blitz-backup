@@ -58,9 +58,16 @@ Kirigami.ApplicationWindow {
         ]
 
         Kirigami.CardsListView {
-            id: layout
+            id: snapshotList
             model: snapshotModel
             delegate: SnapshotDelegate {
+            }
+            Kirigami.PlaceholderMessage {
+                anchors.centerIn: parent
+                width: parent.width - Kirigami.Units.largeSpacing * 4
+                visible: snapshotList.count === 0
+                text: "No entries"
+                explanation: "Click Backup to create a new backup"
             }
         }
 
