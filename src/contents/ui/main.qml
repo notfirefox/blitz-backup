@@ -39,7 +39,7 @@ Kirigami.ApplicationWindow {
     }
 
     pageStack.initialPage: Kirigami.ScrollablePage {
-        title: i18nc("@title", "Entries")
+        title: i18nc("@title", snapshotList.count + " Entries")
 
         // Kirigami.Action encapsulates a UI action. Inherits from Controls.Action
         actions: [
