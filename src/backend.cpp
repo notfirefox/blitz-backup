@@ -26,10 +26,9 @@ void ensure_environment() {
 Q_INVOKABLE void Backend::backup() { std::cout << "Backup" << std::endl; }
 
 Q_INVOKABLE void Backend::refresh() {
-    std::cout << "Refresh" << std::endl;
     if (process->state() == QProcess::NotRunning) {
         ensure_environment();
-        this->process->startCommand("restic snapshots --json");
+        process->startCommand("restic snapshots --json");
     }
 }
 
