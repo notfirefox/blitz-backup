@@ -34,11 +34,11 @@ Q_INVOKABLE void Backend::refresh() {
 }
 
 Q_INVOKABLE void Backend::mount(const QString &snapshotId) {
-    std::cout << "Mount " << snapshotId.toStdString() << std::endl;
+    qDebug() << "Mount " << snapshotId << "\n";
 }
 
 Q_INVOKABLE void Backend::restore(const QString &snapshotId) {
-    std::cout << "Restore " << snapshotId.toStdString() << std::endl;
+    qDebug() << "Restore " << snapshotId << "\n";
 }
 
 void Backend::handleResticOutput(int exitCode,
