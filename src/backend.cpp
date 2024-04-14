@@ -12,9 +12,16 @@
 #include <qtenvironmentvariables.h>
 
 Backend::Backend(QObject *parent)
-    : QObject(parent), process(new QProcess(this)) {
+    : QObject(parent), mLoading(false), process(new QProcess(this)) {
     QObject::connect(this->process, &QProcess::finished, this,
                      &Backend::handleResticOutput);
+}
+
+bool Backend::loading() const { return mLoading; }
+
+void Backend::setLoading(const bool loading) {
+    mLoading = loading;
+    Q_EMIT loadingChanged();
 }
 
 void ensure_environment() {
@@ -29,6 +36,7 @@ Q_INVOKABLE void Backend::refresh() {
     if (process->state() == QProcess::NotRunning) {
         ensure_environment();
         process->startCommand("restic snapshots --json");
+        setLoading(true);
     }
 }
 
@@ -42,6 +50,7 @@ Q_INVOKABLE void Backend::restore(const QString &snapshotId) {
 
 void Backend::handleResticOutput(int exitCode,
                                  QProcess::ExitStatus exitStatus) {
+    setLoading(false);
     if (exitStatus == QProcess::NormalExit) {
         auto buf = this->process->readAllStandardOutput();
         auto jsonDoc = QJsonDocument::fromJson(buf);
