@@ -1,5 +1,7 @@
 #include "backend.h"
 
+#include "config.h"
+
 #include <algorithm>
 #include <iostream>
 #include <qjsonarray.h>
@@ -7,6 +9,7 @@
 #include <qjsonobject.h>
 #include <qobjectdefs.h>
 #include <qprocess.h>
+#include <qtenvironmentvariables.h>
 
 Backend::Backend(QObject *parent)
     : QObject(parent), process(new QProcess(this)) {
@@ -14,11 +17,18 @@ Backend::Backend(QObject *parent)
                      &Backend::handleResticOutput);
 }
 
+void ensure_environment() {
+    auto *config = Config::self();
+    qputenv("RESTIC_REPOSITORY", config->repository().toStdString());
+    qputenv("RESTIC_PASSWORD", config->password().toStdString());
+}
+
 Q_INVOKABLE void Backend::backup() { std::cout << "Backup" << std::endl; }
 
 Q_INVOKABLE void Backend::refresh() {
     std::cout << "Refresh" << std::endl;
     if (process->state() == QProcess::NotRunning) {
+        ensure_environment();
         this->process->startCommand("restic snapshots --json");
     }
 }
