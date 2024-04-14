@@ -14,7 +14,7 @@ int Snapshot::uid() const { return mUid; }
 int Snapshot::gid() const { return mGid; }
 QStringList Snapshot::excludes() const { return mExcludes; }
 QStringList Snapshot::tags() const { return mTags; }
-QString Snapshot::progamVersion() const { return mProgramVersion; }
+QString Snapshot::programVersion() const { return mProgramVersion; }
 QString Snapshot::id() const { return mId; }
 QString Snapshot::shortId() const { return mShortId; }
 

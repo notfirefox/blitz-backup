@@ -63,7 +63,7 @@ QVariant SnapshotModel::data(const QModelIndex &index, int role) const {
     case TagsRole:
         return snapshot.tags();
     case ProgramVersionRole:
-        return snapshot.progamVersion();
+        return snapshot.programVersion();
     case IdRole:
         return snapshot.id();
     case ShortIdRole:
