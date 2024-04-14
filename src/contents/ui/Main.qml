@@ -51,7 +51,7 @@ Kirigami.ApplicationWindow {
                     }
                 }
                 Controls.TextField {
-                    Kirigami.FormData.label: "password"
+                    Kirigami.FormData.label: "Password"
                     text: Config.password
                     onTextChanged: {
                         Config.password = text;
