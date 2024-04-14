@@ -18,7 +18,7 @@ class Snapshot {
     int gid() const;
     QStringList excludes() const;
     QStringList tags() const;
-    QString progamVersion() const;
+    QString programVersion() const;
     QString id() const;
     QString shortId() const;
 
