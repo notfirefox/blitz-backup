@@ -110,6 +110,26 @@ Kirigami.ApplicationWindow {
                 explanation: "Click Backup to create a new backup"
             }
         }
+        footer: ColumnLayout {
+            Kirigami.Separator {
+                Layout.fillWidth: true
+            }
+            RowLayout {
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+                Layout.fillHeight: true
+                Controls.Label {
+                    text: "Loaded"
+                    visible: !loadingBar.visible
+                }
+                Controls.ProgressBar {
+                    id: loadingBar
+                    from: 0
+                    to: 100
+                    visible: Backend.loading
+                    indeterminate: true
+                }
+            }
+        }
 
         Component.onCompleted: {
             Backend.snapshotModelUpdated.connect(snapshotModel.updateSnapshotModel);
